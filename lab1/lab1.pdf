@@ -1,0 +1,175 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "SgNZTjrhcHa0"
+      },
+      "source": [
+        "## Lab#1, NLP Spring 2023\n",
+        "\n",
+        "### This is due on 2023/03/06 15:30, commit to your github as a PDF (lab1.pdf) (File>Print>Save as PDF). \n",
+        "\n",
+        "#### IMPORTANT: After copying this notebook to your Google Drive, please paste a link to it below. To get a publicly-accessible link, hit the *Share* button at the top right, then click \"Get shareable link\" and copy over the result. If you fail to do this, you will receive no credit for this lab!\n",
+        "\n",
+        "***LINK: *paste your link here****\n",
+        "####https://colab.research.google.com/drive/xxxxxxxxx\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hpg8eU9wNBci"
+      },
+      "source": [
+        "**Student ID**: B0928026\n",
+        "\n",
+        "**Name**: 洪詩晴\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "r1_cCBOwfPxI"
+      },
+      "source": [
+        "##Question 1 (100 points)\n",
+        "Let's switch over to coding! Write some code in this cell to compute the number of unique word **tokens** in this paragraph (5 steps of Text Normalisation: 1. Lowercase Conversion, 2. Remove punctuations, 3. Stemming, 4. Lemmatisation, 5. Stopword Removal). Use a whitespace tokenizer to separate words (i.e., split the string by white space). Be sure that the cell's output is visible in the PDF file you turn in on Github.\n",
+        "\n",
+        "---\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "STVNzF0frsX8"
+      }
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "W9Fm6AQJQDFa",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1250
+        },
+        "outputId": "77cf0bad-0f24-4109-a1b9-7490c0919294"
+      },
+      "source": [
+        "paragraph = '''Last night I dreamed I went to Manderley again. It seemed to me\n",
+        "that I was passing through the iron gates that led to the driveway.\n",
+        "The drive was just a narrow track now, its stony surface covered\n",
+        "with grass and weeds. Sometimes, when I thought I had lost it, it\n",
+        "would appear again, beneath a fallen tree or beyond a muddy pool \n",
+        "formed by the winter rains. The trees had thrown out new\n",
+        "low branches which stretched across my way. I came to the house\n",
+        "suddenly, and stood there with my heart beating fast and tears\n",
+        "filling my eyes.'''\n",
+        "\n",
+        "# DO NOT MODIFY THE VARIABLES\n",
+        "tokens = 0\n",
+        "word_tokens = []\n",
+        "\n",
+        "# YOUR CODE HERE! POPULATE THE tokens and word_tokens VARIABLES WITH THE CORRECT VALUES!\n",
+        "\n",
+        "#1. Lowercase Conversion\n",
+        "tokens_lower = paragraph.lower()\n",
+        "\n",
+        "#2. Remove punctuations\n",
+        "import nltk as nltk\n",
+        "nltk.download(\"punkt\")\n",
+        "def remove_punct(token):\n",
+        "  return [word for word in token if word.isalpha()]\n",
+        "\n",
+        "sent = remove_punct(paragraph)\n",
+        "\n",
+        "#3. Stemming\n",
+        "\n",
+        "from nltk.stem import PorterStemmer, LancasterStemmer, SnowballStemmer\n",
+        "\n",
+        "tokens = [\"the\", \"spectators\", \"all\", \"stood\", \"and\", \"sang\", \"the\", \"national\", \"anthem\"]\n",
+        "\n",
+        "#stemming\n",
+        "port = PorterStemmer()\n",
+        "stemmed_port = [port.stem(token) for token in tokens]\n",
+        "\n",
+        "lanc = LancasterStemmer()\n",
+        "stemmed_lanc = [lanc.stem(token) for token in tokens]\n",
+        "\n",
+        "snow = SnowballStemmer(\"english\")\n",
+        "stemmed_snow = [snow.stem(token) for token in tokens]\n",
+        "\n",
+        "#4. Lemmatisation\n",
+        "\n",
+        "from nltk.stem import WordNetLemmatizer\n",
+        "tokens = [\"the\", \"spectators\", \"all\", \"stood\", \"and\", \"sang\", \"the\", \"national\", \"anthem\"]\n",
+        "\n",
+        "lemmatiser = WordNetLemmatizer()\n",
+        "for token in tokens:\n",
+        "  lemmatised = lemmatiser.lemmatize(token)\n",
+        "  \n",
+        "#5. Stopword Removal\n",
+        "\n",
+        "from nltk.corpus import stopwords\n",
+        "nltk.download(\"stopwords\")\n",
+        "\n",
+        "# defining stopwords in English\n",
+        "stop_words = set(stopwords.words(\"english\"))\n",
+        "\n",
+        "# removing stop words\n",
+        "words_no_stop = [word for word in lemmatised if word not in stop_words]\n",
+        "\n",
+        "# DO NOT MODIFY THE BELOW LINE!\n",
+        "print('Number of word tokens: %d' % (tokens))\n",
+        "print(\"printing lists separated by commas\")\n",
+        "print(*word_tokens, sep = \", \") "
+      ],
+      "execution_count": 24,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
+            "[nltk_data]   Package punkt is already up-to-date!\n"
+          ]
+        },
+        {
+          "output_type": "error",
+          "ename": "LookupError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mLookupError\u001b[0m                               Traceback (most recent call last)",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/corpus/util.py\u001b[0m in \u001b[0;36m__load\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     83\u001b[0m                 \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 84\u001b[0;31m                     \u001b[0mroot\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnltk\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfind\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"{self.subdir}/{zip_name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     85\u001b[0m                 \u001b[0;32mexcept\u001b[0m \u001b[0mLookupError\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/data.py\u001b[0m in \u001b[0;36mfind\u001b[0;34m(resource_name, paths)\u001b[0m\n\u001b[1;32m    582\u001b[0m     \u001b[0mresource_not_found\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34mf\"\\n{sep}\\n{msg}\\n{sep}\\n\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 583\u001b[0;31m     \u001b[0;32mraise\u001b[0m \u001b[0mLookupError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresource_not_found\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    584\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mLookupError\u001b[0m: \n**********************************************************************\n  Resource \u001b[93mwordnet\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('wordnet')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93mcorpora/wordnet.zip/wordnet/\u001b[0m\n\n  Searched in:\n    - '/root/nltk_data'\n    - '/usr/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n**********************************************************************\n",
+            "\nDuring handling of the above exception, another exception occurred:\n",
+            "\u001b[0;31mLookupError\u001b[0m                               Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-24-e061b02bd89d>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m     49\u001b[0m \u001b[0mlemmatiser\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mWordNetLemmatizer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     50\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mtoken\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mtokens\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 51\u001b[0;31m   \u001b[0mlemmatised\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mlemmatiser\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mlemmatize\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mtoken\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     52\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     53\u001b[0m \u001b[0;31m#5. Stopword Removal\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/stem/wordnet.py\u001b[0m in \u001b[0;36mlemmatize\u001b[0;34m(self, word, pos)\u001b[0m\n\u001b[1;32m     43\u001b[0m         \u001b[0;34m:\u001b[0m\u001b[0;32mreturn\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mThe\u001b[0m \u001b[0mlemma\u001b[0m \u001b[0mof\u001b[0m\u001b[0;31m \u001b[0m\u001b[0;31m`\u001b[0m\u001b[0mword\u001b[0m\u001b[0;31m`\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;32mfor\u001b[0m \u001b[0mthe\u001b[0m \u001b[0mgiven\u001b[0m\u001b[0;31m \u001b[0m\u001b[0;31m`\u001b[0m\u001b[0mpos\u001b[0m\u001b[0;31m`\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     44\u001b[0m         \"\"\"\n\u001b[0;32m---> 45\u001b[0;31m         \u001b[0mlemmas\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mwn\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_morphy\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mword\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpos\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     46\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mmin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mlemmas\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkey\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mlen\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mlemmas\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0mword\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     47\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/corpus/util.py\u001b[0m in \u001b[0;36m__getattr__\u001b[0;34m(self, attr)\u001b[0m\n\u001b[1;32m    119\u001b[0m             \u001b[0;32mraise\u001b[0m \u001b[0mAttributeError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"LazyCorpusLoader object has no attribute '__bases__'\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    120\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 121\u001b[0;31m         \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m__load\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    122\u001b[0m         \u001b[0;31m# This looks circular, but its not, since __load() changes our\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    123\u001b[0m         \u001b[0;31m# __class__ to something new:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/corpus/util.py\u001b[0m in \u001b[0;36m__load\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     84\u001b[0m                     \u001b[0mroot\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnltk\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfind\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"{self.subdir}/{zip_name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     85\u001b[0m                 \u001b[0;32mexcept\u001b[0m \u001b[0mLookupError\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 86\u001b[0;31m                     \u001b[0;32mraise\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     87\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     88\u001b[0m         \u001b[0;31m# Load the corpus.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/corpus/util.py\u001b[0m in \u001b[0;36m__load\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m     79\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     80\u001b[0m             \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 81\u001b[0;31m                 \u001b[0mroot\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnltk\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mdata\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfind\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34mf\"{self.subdir}/{self.__name}\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     82\u001b[0m             \u001b[0;32mexcept\u001b[0m \u001b[0mLookupError\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0me\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     83\u001b[0m                 \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.8/dist-packages/nltk/data.py\u001b[0m in \u001b[0;36mfind\u001b[0;34m(resource_name, paths)\u001b[0m\n\u001b[1;32m    581\u001b[0m     \u001b[0msep\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m\"*\"\u001b[0m \u001b[0;34m*\u001b[0m \u001b[0;36m70\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    582\u001b[0m     \u001b[0mresource_not_found\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34mf\"\\n{sep}\\n{msg}\\n{sep}\\n\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 583\u001b[0;31m     \u001b[0;32mraise\u001b[0m \u001b[0mLookupError\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mresource_not_found\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    584\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    585\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mLookupError\u001b[0m: \n**********************************************************************\n  Resource \u001b[93mwordnet\u001b[0m not found.\n  Please use the NLTK Downloader to obtain the resource:\n\n  \u001b[31m>>> import nltk\n  >>> nltk.download('wordnet')\n  \u001b[0m\n  For more information see: https://www.nltk.org/data.html\n\n  Attempted to load \u001b[93mcorpora/wordnet\u001b[0m\n\n  Searched in:\n    - '/root/nltk_data'\n    - '/usr/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/share/nltk_data'\n    - '/usr/local/share/nltk_data'\n    - '/usr/lib/nltk_data'\n    - '/usr/local/lib/nltk_data'\n**********************************************************************\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
